@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #carousel {
+                border: 1px solid black;
+                background-color: cadetblue;
+                width: 50%;
+                height: 90%;
+                position: absolute;
+                left: 10%;
+                right: 10%;
+            }
+            #arrow1 {
+                position: absolute;
+                left: 2%;
+                top: 50%;
+                cursor: pointer;
+                z-index: 1;
+                transform: rotate(180deg);
+            }
+            #arrow2 {
+                float: right;
+                position: absolute;
+                right: 1%;
+                top: 50%;  
+                cursor: pointer;
+                z-index: 1; 
+            }
+            .image {
+                position: absolute;
+                top: 3%;
+                right: 10%;
+            }
+            .image img {
+                width: 600px;
+                height: 460px;
+                display: inline-block;
+            }
+            @keyframes fadeIn0{
+                0%{opacity: 0;}
+                100%{opacity: 1;}
+            }
+            @keyframes fadeIn1{
+                0%{opacity: 0;}
+                100%{opacity: 1;}
+            }
+            @keyframes fadeIn2{
+                0%{opacity: 0;}
+                100%{opacity: 1;}
+            }
+            @keyframes fadeIn3{
+                0%{opacity: 0;}
+                100%{opacity: 1;}
+            }
+            .indicators span {
+                display: inline-block;
+                width: 80px;
+                height: 5px;
+                margin: 2px;
+                background-color: grey;
+            }
+            .indicators {
+                position: absolute;
+                bottom: 7%;
+                left: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="carousel">
+            <img id="arrow1" style="height: 70px; width: 70px;" src="images/arrow.png">
+            <div class="image">
+                <img src="">
+            </div>
+            <img id="arrow2" style="height: 70px; width: 70px;" src="images/arrow.png">
+            <div class="indicators">
+            </div>
+        </div>
+        <script>
+            var images = ['Pulihora.jpg', 'dosa.jpg', 'idli.jpg', 'puri.jpg'];
+            var currentImage = document.getElementsByClassName('image')[0];
+            var counter = 0, spans;
+
+            //reset already filled white colored spans to grey
+            function resetSpanBgColor(spans) {
+                for(var i = 0; i< images.length; i++) {
+                    spans[i].style.backgroundColor = 'grey';     
+                }
+            }
+            (function() {
+                currentImage.children[0].setAttribute('src', 'images/'+images[0]);
+                var indicators = document.getElementsByClassName('indicators')[0];
+                for(var i = 0; i< images.length; i++) {
+                    indicators.appendChild(document.createElement('span'));
+                }
+                spans = document.querySelectorAll('.indicators span');
+                spans[0].style.backgroundColor = 'white';
+                
+            })();
+            document.getElementById('arrow2').addEventListener('click', function() {
+                if(counter === images.length-1) {
+                    counter = 0;
+                }else {
+                    counter++;
+                }
+                
+                currentImage.children[0].setAttribute('src', 'images/'+images[counter]);
+                //animations will work with only different names for each
+                //if all the looped images have same animationName, only
+                //the first one will run its animation
+                currentImage.children[0].style.animationName = 'fadeIn'+counter;
+                currentImage.children[0].style.animationTimingFunction = 'ease';
+                currentImage.children[0].style.animationDuration = '2s';
+                resetSpanBgColor(spans);
+                spans[counter].style.backgroundColor = 'white';
+            });
+            document.getElementById('arrow1').addEventListener('click', function() {
+                if(counter === 0) {
+                    counter = images.length-1;
+                }else {
+                    counter--;
+                }
+                currentImage.children[0].setAttribute('src', 'images/'+images[counter]);
+                currentImage.children[0].style.animationName = 'fadeIn'+counter;
+                currentImage.children[0].style.animationTimingFunction = 'ease';
+                currentImage.children[0].style.animationDuration = '2s';
+                resetSpanBgColor(spans);
+                spans[counter].style.backgroundColor = 'white';
+            });
+        </script>
+    </body>
+</html>
