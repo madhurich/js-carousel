@@ -82,22 +82,27 @@
             var currentImage = document.getElementsByClassName('image')[0];
             var counter = 0, spans;
 
+            //initially set the image to first one in the array
+            currentImage.children[0].setAttribute('src', 'images/'+images[0]);
+            var indicators = document.getElementsByClassName('indicators')[0];
+            //create indicators same as number of images
+            //at the bottom of the image
+            for(var i = 0; i< images.length; i++) {
+                indicators.appendChild(document.createElement('span'));
+            }
+            spans = document.querySelectorAll('.indicators span');
+            //set the first indicator as selected by default
+            //(here selected indicates white color)
+            spans[0].style.backgroundColor = 'white';
+
             //reset already filled white colored spans to grey
             function resetSpanBgColor(spans) {
                 for(var i = 0; i< images.length; i++) {
                     spans[i].style.backgroundColor = 'grey';     
                 }
             }
-            (function() {
-                currentImage.children[0].setAttribute('src', 'images/'+images[0]);
-                var indicators = document.getElementsByClassName('indicators')[0];
-                for(var i = 0; i< images.length; i++) {
-                    indicators.appendChild(document.createElement('span'));
-                }
-                spans = document.querySelectorAll('.indicators span');
-                spans[0].style.backgroundColor = 'white';
                 
-            })();
+            
             document.getElementById('arrow2').addEventListener('click', function() {
                 if(counter === images.length-1) {
                     counter = 0;
